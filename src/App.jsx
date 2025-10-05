@@ -1,42 +1,53 @@
 // src/App.jsx
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
-import { getInitialData } from './utils/local-data';
+import { 
+  getAllNotes, 
+  addNote, 
+  deleteNote, 
+  archiveNote, 
+  unarchiveNote 
+} from './utils/local-data';
+
 // Import pages dan components
-import Header from './components/Header.jsx'; 
+import Header from './components/Header.jsx';
 import Home from './pages/Home.jsx';
 import Detail from './pages/Detail.jsx';
 import Add from './pages/Add.jsx';
 import Archives from './pages/Archives.jsx';
 import NotFound from './pages/NotFound.jsx';
 
-
 function AppContent() {
-  const [notes, setNotes] = useState(getInitialData()); // State data
+  // Ambil data awal HANYA sekali saat komponen pertama kali dirender
+  const [notes, setNotes] = useState(getAllNotes());
   const [searchParams, setSearchParams] = useSearchParams();
-  const keyword = searchParams.get('keyword') || ''; // Opsional 2: Search Parameter
+  const keyword = searchParams.get('keyword') || '';
 
-  // --- Fungsi Manipulasi Catatan (Penting!) ---
   const onAddNoteHandler = (newNote) => {
-    setNotes((prevNotes) => [newNote, ...prevNotes]); // Tambahkan di awal
+    addNote(newNote); // Panggil fungsi dari local-data.js
+    setNotes(getAllNotes()); // Perbarui state dengan data terbaru
   };
 
-  const onDeleteHandler = (id) => { // Kriteria Utama 5
-    setNotes((prevNotes) => prevNotes.filter(note => note.id !== id));
+  const onDeleteHandler = (id) => {
+    deleteNote(id); // Panggil fungsi dari local-data.js
+    setNotes(getAllNotes()); // Perbarui state dengan data terbaru
   };
 
-  const onArchiveHandler = (id) => { // Kriteria Opsional 1
-    setNotes((prevNotes) => prevNotes.map(note =>
-      note.id === id ? { ...note, archived: !note.archived } : note
-    ));
+  const onArchiveHandler = (id) => {
+    const note = notes.find(n => n.id === id);
+    if (note.archived) {
+      unarchiveNote(id); // Panggil fungsi dari local-data.js
+    } else {
+      archiveNote(id); // Panggil fungsi dari local-data.js
+    }
+    setNotes(getAllNotes()); // Perbarui state dengan data terbaru
   };
 
-  const onSearchChangeHandler = (newKeyword) => { // Opsional 2
+  const onSearchChangeHandler = (newKeyword) => {
     setSearchParams({ keyword: newKeyword });
   };
-  // ---------------------------------------------
 
-  // Filter Catatan berdasarkan keyword (Opsional 2)
+  // Filter Catatan berdasarkan keyword
   const filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(keyword.toLowerCase())
   );
@@ -46,15 +57,10 @@ function AppContent() {
       <Header keyword={keyword} onSearchChange={onSearchChangeHandler} />
       <main className="app-main">
         <Routes>
-          {/* Kriteria Utama 1 & 2 */}
           <Route path="/" element={<Home notes={filteredNotes.filter(n => !n.archived)} onDelete={onDeleteHandler} onArchive={onArchiveHandler} />} />
-          {/* Kriteria Opsional 1 */}
           <Route path="/archives" element={<Archives notes={filteredNotes.filter(n => n.archived)} onDelete={onDeleteHandler} onArchive={onArchiveHandler} />} />
-          {/* Kriteria Utama 4 */}
           <Route path="/notes/new" element={<Add addNote={onAddNoteHandler} />} />
-          {/* Kriteria Utama 3 */}
           <Route path="/notes/:id" element={<Detail notes={notes} onDelete={onDeleteHandler} onArchive={onArchiveHandler} />} />
-          {/* Kriteria Opsional 3: 404 Pages */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
