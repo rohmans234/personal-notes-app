@@ -1,4 +1,5 @@
 // src/components/NoteItem.jsx
+import React from 'react';
 import { Link } from 'react-router-dom';
 import parser from 'html-react-parser';
 import { showFormattedDate } from '../utils/local-data';
@@ -16,23 +17,13 @@ function NoteItem({ id, title, body, createdAt, onDelete, onArchive, archived })
       {/* Gunakan parser untuk body yang mungkin memiliki format HTML */}
       <div className="note-item__body">{parser(bodyPreview)}</div> 
       <div className="note-item__actions">
-        <button onClick={() => onDelete(id)} className="btn-danger">Hapus</button> {/* Kriteria Utama 5 */}
+        <button onClick={() => onDelete(id)} className="btn-danger">Hapus</button> 
         <button onClick={() => onArchive(id)} className="btn-secondary">
-          {archived ? 'Batal Arsip' : 'Arsipkan'} {/* Kriteria Opsional 1 */}
+          {archived ? 'Batal Arsip' : 'Arsipkan'}
         </button>
       </div>
     </div>
   );
 }
 
-function NotesList({ notes, onDelete, onArchive }) {
-  return (
-    <div className="notes-list-grid"> {/* Grid untuk tata letak modern */}
-      {notes.map(note => (
-        <NoteItem key={note.id} {...note} onDelete={onDelete} onArchive={onArchive} />
-      ))}
-    </div>
-  );
-}
-
-export { NoteItem, NotesList };
+export default NoteItem;

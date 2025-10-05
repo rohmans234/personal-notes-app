@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
 import { getInitialData } from './utils/local-data';
 // Import pages dan components
-import Header from './components/Header';
-import Home from './pages/Home';
-import Detail from './pages/Detail';
-import Add from './pages/Add';
-import Archives from './pages/Archives';
-import NotFound from './pages/NotFound';
+import Header from './components/Header.jsx'; 
+import Home from './pages/Home.jsx';
+import Detail from './pages/Detail.jsx';
+import Add from './pages/Add.jsx';
+import Archives from './pages/Archives.jsx';
+import NotFound from './pages/NotFound.jsx';
+import './index.css';
 
 function AppContent() {
   const [notes, setNotes] = useState(getInitialData()); // State data

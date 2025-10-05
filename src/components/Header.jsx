@@ -1,6 +1,7 @@
 // src/components/Header.jsx
+import React from 'react'; // Impor React untuk komponen yang lebih stabil
 import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar'; // Komponen SearchBar dibuat terpisah
+import SearchBar from './SearchBar.jsx'; // Tambahkan ekstensi .jsx
 
 function Header({ keyword, onSearchChange }) {
   return (
@@ -11,12 +12,9 @@ function Header({ keyword, onSearchChange }) {
         <Link to="/archives">Arsip</Link>
         <Link to="/notes/new" className="add-btn">+</Link>
       </nav>
-      {/* SearchBar akan menggunakan URL Search Parameter (Opsional 2) */}
       <SearchBar keyword={keyword} onSearchChange={onSearchChange} />
     </header>
   );
 }
 
 export default Header;
-
-// (SearchBar component removed, should be in its own file)

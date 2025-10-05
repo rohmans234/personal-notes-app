@@ -1,5 +1,5 @@
 // src/pages/Archives.jsx
-import NotesList from '../components/NotesList';
+import NotesList from '../components/NotesList.jsx'; // Tambahkan ekstensi .jsx
 
 function Archives({ notes, onDelete, onArchive }) {
   // notes di sini sudah terfilter di App.jsx untuk archived: true
@@ -10,7 +10,7 @@ function Archives({ notes, onDelete, onArchive }) {
         <p className="empty-message">Arsip kosong</p> 
       ) : (
         <NotesList notes={notes} onDelete={onDelete} onArchive={onArchive} />
-      )};
+      )}
     </section>
   );
 }

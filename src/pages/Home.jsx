@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import NotesList from '../components/NotesList.jsx';
+import NotesList from '../components/NotesList.jsx'; // Tambahkan ekstensi .jsx
 
 function Home({ notes, onDelete, onArchive }) {
   return (
