@@ -9,7 +9,7 @@ import Detail from './pages/Detail.jsx';
 import Add from './pages/Add.jsx';
 import Archives from './pages/Archives.jsx';
 import NotFound from './pages/NotFound.jsx';
-import './index.css';
+
 
 function AppContent() {
   const [notes, setNotes] = useState(getInitialData()); // State data

@@ -1,63 +1,238 @@
-/* Contoh di src/styles/main.css atau index.css */
+/* src/index.css (KODE BARU DARI AWAL) */
 
-/* Reset Dasar */
+/* 1. Variabel Warna dan Reset Dasar */
+:root {
+  --background-color: #f4f7f9;
+  --surface-color: #ffffff;
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --danger-color: #e74c3c;
+  --danger-hover: #c0392b;
+  --secondary-color: #95a5a6;
+  --secondary-hover: #7f8c8d;
+  --text-color: #2c3e50;
+  --subtle-text: #7f8c8d;
+  --border-color: #ecf0f1;
+  --shadow-color: rgba(44, 62, 80, 0.1);
+}
+
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Tata Letak Global */
 body {
-    background-color: #f7f9fc; /* Latar belakang abu-abu terang */
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-/* Header (Modern) */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 2. Tata Letak Utama Aplikasi */
+.app-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 3. Header */
 .app-header {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Shadow halus */
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: var(--surface-color);
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
 }
 
-/* Kartu Catatan (Elegansi) */
-.note-item.card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Shadow yang jelas tapi elegan */
-    transition: transform 0.2s;
-}
-.note-item.card:hover {
-    transform: translateY(-5px); /* Efek hover modern */
+.app-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
-/* Daftar Grid */
+.app-header nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-header nav a {
+  font-weight: 500;
+  color: var(--subtle-text);
+  transition: color 0.2s ease;
+}
+
+.app-header nav a:hover {
+  color: var(--primary-color);
+}
+
+/* Tombol Tambah Catatan (+) */
+.add-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:hover {
+  background-color: var(--primary-hover);
+  color: white; /* Pastikan warna tetap putih saat hover */
+}
+
+
+/* 4. Search Bar */
+.search-input {
+  flex-grow: 1;
+  max-width: 400px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* 5. Daftar Catatan (Grid) */
 .notes-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
 }
 
-/* Form Input (Add Page) */
-.add-new-page__input__title,
-.add-new-page__input__body {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    /* Hilangkan outline default */
-    outline: none; 
-    transition: border-color 0.3s;
+/* 6. Item Catatan (Card) */
+.note-item {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Content Editable Styling */
-[contenteditable]:focus {
-    border-color: #007bff; /* Warna aksen saat fokus */
+.note-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.note-item__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-item__date {
+  font-size: 12px;
+  color: var(--subtle-text);
+}
+
+.note-item__body {
+  font-size: 14px;
+  line-height: 1.6;
+  flex-grow: 1;
+  margin: 8px 0;
+}
+
+.note-item__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto; /* Mendorong tombol ke bawah card */
+}
+
+/* 7. Tombol Aksi (Hapus, Arsip, dll) */
+.btn-danger, .btn-secondary, .btn-primary {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* 8. Halaman Detail dan Halaman Tambah */
+.detail-page, .add-new-page {
+  background-color: var(--surface-color);
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.detail-page__title, .add-new-page__input__title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.detail-page__date {
+  color: var(--subtle-text);
+  margin-bottom: 24px;
+}
+
+.detail-page__body, .add-new-page__input__body {
+  font-size: 16px;
+  line-height: 1.8;
+  min-height: 200px;
+}
+
+.detail-page__action {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+}
+
+/* 9. Pesan Kosong */
+.empty-message {
+  text-align: center;
+  margin-top: 48px;
+  color: var(--subtle-text);
+  font-size: 18px;
 }
