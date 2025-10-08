@@ -104,6 +104,14 @@ function editNote({ id, title, body }) {
     return note;
   });
 }
+const showFormattedDate = (date) => {
+  return new Date(date).toLocaleDateString('id-ID', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
 export {
   getAllNotes,
@@ -115,4 +123,5 @@ export {
   archiveNote,
   unarchiveNote,
   addNote,
+  showFormattedDate,
 };
