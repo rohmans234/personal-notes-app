@@ -1,7 +1,6 @@
-// src/contexts/ThemeContext.js
-import React, { createContext, useState, useMemo } from 'react';
-
-export const ThemeContext = createContext();
+// src/contexts/ThemeContext.jsx
+import React, { useState, useMemo } from 'react';
+import { ThemeContext } from './ThemeContext';
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
