@@ -1,5 +1,6 @@
+// src/contexts/ThemeProvider.jsx
 import React, { useState, useMemo } from 'react';
-import { ThemeContext } from './ThemeContext';
+import { ThemeContext } from './ThemeContext'; // Impor dari file baru
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -9,7 +10,7 @@ export function ThemeProvider({ children }) {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
   };
-  
+
   const themeValue = useMemo(() => ({ theme, toggleTheme }), [theme]);
 
   return (

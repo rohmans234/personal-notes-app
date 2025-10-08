@@ -1,7 +1,7 @@
 // src/components/Header.jsx (Corrected)
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { ThemeContext } from '../contexts/ThemeContext.js'; // Impor dari file baru
 
 
 function Header({ logout, name }) {

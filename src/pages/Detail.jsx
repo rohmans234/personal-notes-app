@@ -1,41 +1,68 @@
-// src/pages/Detail.jsx
+// src/pages/DetailPage.jsx (FIXED)
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import parser from 'html-react-parser';
+import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
 import { showFormattedDate } from '../utils/local-data';
-import NotFound from './NotFound'; // Import 404
+import NotFound from './NotFound';
 
-function Detail({ notes, onDelete, onArchive }) {
+function DetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const note = notes.find(n => n.id === id);
+  const [note, setNote] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!note) {
-    return <NotFound />; // Jika ID tidak valid (Kriteria Utama 3)
-  }
+  useEffect(() => {
+    async function fetchNote() {
+      const { data } = await getNote(id);
+      setNote(data);
+      setLoading(false);
+    }
+    fetchNote();
+  }, [id]);
 
-  const handleDelete = () => {
-    onDelete(note.id);
+  const handleDelete = async () => {
+    await deleteNote(id);
     navigate('/'); // Kembali ke Home setelah hapus
   };
 
-  const handleArchive = () => {
-    onArchive(note.id);
-    navigate(note.archived ? '/archives' : '/'); // Navigasi yang sesuai
+  const handleArchive = async () => {
+    await archiveNote(id);
+    navigate('/'); // Kembali ke Home setelah arsip
   };
+
+  const handleUnarchive = async () => {
+    await unarchiveNote(id);
+    navigate('/archives'); // Kembali ke halaman arsip
+  };
+
+  if (loading) {
+    return <p>Memuat catatan...</p>;
+  }
+
+  if (!note) {
+    return <NotFound />;
+  }
 
   return (
     <section className="detail-page">
       <h1 className="detail-page__title">{note.title}</h1>
       <p className="detail-page__date">{showFormattedDate(note.createdAt)}</p>
-      {/* MERENDER HTML FORMATTED BODY */}
-      <div className="detail-page__body">{parser(note.body)}</div> 
+      <div className="detail-page__body">{parser(note.body)}</div>
       <div className="detail-page__action">
-        <button onClick={handleDelete} className="btn-danger">Hapus</button> {/* Kriteria Utama 5 */}
-        <button onClick={handleArchive} className="btn-primary">
-          {note.archived ? 'Batal Arsip' : 'Arsipkan'}
-        </button>
+        <button onClick={handleDelete} className="btn-danger">Hapus</button>
+        {note.archived ? (
+          <button onClick={handleUnarchive} className="btn-primary">
+            Batal Arsip
+          </button>
+        ) : (
+          <button onClick={handleArchive} className="btn-primary">
+            Arsipkan
+          </button>
+        )}
       </div>
     </section>
   );
 }
-export default Detail;
+
+export default DetailPage;

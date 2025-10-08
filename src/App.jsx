@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { getUserLogged, putAccessToken } from './utils/network-data';
-import { ThemeContext } from './contexts/ThemeContext';
+import { ThemeContext } from './contexts/ThemeContext.js';
 
 // Import Pages and Components
 import Header from './components/Header'; // Asumsi Header ada di sini
